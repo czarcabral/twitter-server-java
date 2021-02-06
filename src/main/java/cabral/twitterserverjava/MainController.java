@@ -1,7 +1,11 @@
 package cabral.twitterserverjava;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -12,6 +16,7 @@ import java.util.List;
 public class MainController {
 
     List<TweetDto> tweets;
+    String currentUser;
 
     MainController() {
         tweets = new ArrayList<TweetDto>(Arrays.asList(
@@ -25,6 +30,7 @@ public class MainController {
                 new TweetDto("Andre", "Poison ivy grew through the fence they said was impenetrable.", "2/4/21", 17, 8, 91),
                 new TweetDto("Andre", "If you like tuna and tomato sauce- try combining the two. It’s really not as bad as it sounds.", "2/4/21", 1010, 1123, 121)
         ));
+        currentUser = null;
     }
 
     @CrossOrigin
@@ -32,4 +38,14 @@ public class MainController {
     public List<TweetDto> getAllTweets() {
         return tweets;
     }
+
+    @CrossOrigin
+    @PostMapping("/api/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        currentUser = loginRequest.getUserName();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+//    @GetMapping("/api/login")
+//    public String
 }
