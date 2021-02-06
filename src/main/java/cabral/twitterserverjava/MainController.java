@@ -46,6 +46,12 @@ public class MainController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @CrossOrigin
+    @GetMapping("/api/currentUser")
+    public String currentUser() {
+        return currentUser;
+    }
+
 //    @GetMapping("/api/login")
 //    public String
 }
