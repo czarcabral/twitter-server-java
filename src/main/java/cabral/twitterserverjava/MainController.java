@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class MainController {
@@ -35,8 +37,10 @@ public class MainController {
 
     @CrossOrigin
     @GetMapping("/api/tweets")
-    public List<TweetDto> getAllTweets() {
-        return tweets;
+    public ResponseEntity<?> getAllTweets() {
+        Map<String, Object> results = new HashMap<>();
+        results.put("data", tweets);
+        return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -48,8 +52,13 @@ public class MainController {
 
     @CrossOrigin
     @GetMapping("/api/currentUser")
-    public String currentUser() {
-        return currentUser;
+    public ResponseEntity<?> currentUser() {
+        if (currentUser == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Map<String, Object> results = new HashMap<>();
+        results.put("data", currentUser);
+        return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
 //    @GetMapping("/api/login")
